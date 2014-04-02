@@ -120,5 +120,11 @@ class ConnectionPool
         connection.send(name, *args, &block)
       end
     end
+
+    def self.method_missing(name, *args, &block)
+      @pool.with do |connection|
+        connection.send(name, *args, &block)
+      end
+    end
   end
 end
